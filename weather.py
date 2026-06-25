@@ -27,7 +27,7 @@ current_data = get_current_weather(LATITUDE, LONGITUDE)
 current_temp = current_data["current"]["temperature_2m"]
 current_time = current_data["current"]["time"]
 log_df = pd.DataFrame({
-    "date": [str(today)],
+    "date": [current_time.split("T")[0]],
     "time": [current_time],
     "temperature_2m": [current_temp]
 })
