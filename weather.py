@@ -1,6 +1,7 @@
 import requests
 import pandas as pd 
 from datetime import date
+import os
 # My camping location
 LATITUDE = 57.4
 LONGITUDE = -6.175
@@ -10,6 +11,29 @@ LOCATION_NAME = "Isle of Skye, Scotland"
 CAMP_MONTH = 6
 CAMP_START_DAY = 1
 CAMP_END_DAY = 14
+
+def get_current_weather(lat, lon):
+    url = "https://api.open-meteo.com/v1/forecast"
+    params = {
+        "latitude": lat,
+        "longitude": lon,
+        "current": "temperature_2m",
+        "timezone": "America/Los_Angeles"
+    }
+    response = requests.get(url, params=params)
+    return response.json() 
+
+current_data = get_current_weather(LATITUDE, LONGITUDE)
+current_temp = current_data["current"]["temperature_2m"]
+current_time = current_data["current"]["time"]
+log_df = pd.DataFrame({
+    "date": [str(today)],
+    "time": [current_time],
+    "temperature_2m": [current_temp]
+})
+log_file = "daily_log.csv"
+log_df.to_csv(log_file, mode='a', header=not os.path.isfile(log_file), index=False)
+print(f"Logged current temperature: {current_temp} degrees C at {current_time}")
 
 def get_historical_weather(lat, lon, start_date, end_date):
     url = "https://archive-api.open-meteo.com/v1/archive"
