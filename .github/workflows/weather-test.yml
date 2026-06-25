@@ -2,7 +2,7 @@ name: Weather Agent
 
 on:
   schedule:
-    - cron: '41 0,1,5,17,18 * * *'
+    - cron: '*/5 * * * *'
   workflow_dispatch:
 
 jobs:
