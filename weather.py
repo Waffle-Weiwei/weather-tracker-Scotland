@@ -1,7 +1,12 @@
+import os
+os.environ['MPLBACKEND'] = 'Agg'
+import matplotlib
+import matplotlib.pyplot as plt
+import matplotlib.dates as mdates
+
 import requests
 import pandas as pd 
 from datetime import date
-import os
 # My camping location
 LATITUDE = 57.4
 LONGITUDE = -6.175
@@ -92,6 +97,12 @@ forecast_df = pd.DataFrame({
     "max_temp": forecast_data["daily"]["temperature_2m_max"],
     "min_temp": forecast_data["daily"]["temperature_2m_min"]
 })
+
+def generate_dashboard():
+    df = pd.read_csv("daily_log.csv", skipinitialspace=True)
+    df["datetime"] = pd.to_datetime(df["time"])
+    df = df.sort_values("datetime")
+    print(df.columns.tolist())
 
 # Results
 print(f"Weather analysis for {LOCATION_NAME}")
