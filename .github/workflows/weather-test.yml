@@ -1,34 +1,33 @@
-name: Weather Test
+# name: Weather Test
+# on:
+#   schedule:
+#     - cron: '*/5 * * * *'
+#   workflow_dispatch:
 
-on:
-  schedule:
-    - cron: '*/5 * * * *'
-  workflow_dispatch:
+# jobs:
+#   update-weather:
+#     runs-on: ubuntu-latest
+#     permissions:
+#       contents: write
+#     steps:
+#       - name: Check out repo
+#         uses: actions/checkout@v5
 
-jobs:
-  update-weather:
-    runs-on: ubuntu-latest
-    permissions:
-      contents: write
-    steps:
-      - name: Check out repo
-        uses: actions/checkout@v5
+#       - name: Set up Python
+#         uses: actions/setup-python@v6
+#         with:
+#           python-version: '3.12'
 
-      - name: Set up Python
-        uses: actions/setup-python@v6
-        with:
-          python-version: '3.12'
+#       - name: Install dependencies
+#         run: pip install -r requirements.txt
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
-
-      - name: Run weather script
-        run: python weather.py
+#       - name: Run weather script
+#         run: python weather.py
         
-      - name: Commit updated data
-        run: |
-          git config user.name "Weather Agent"
-          git config user.email "actions@github.com"
-          git add historical_weather.csv forecast_weather.csv daily_log.csv
-          git commit -m "Update weather data $(date +'%Y-%m-%d')" || echo "No changes to commit"
-          git push
+#       - name: Commit updated data
+#         run: |
+#           git config user.name "Weather Agent"
+#           git config user.email "actions@github.com"
+#           git add historical_weather.csv forecast_weather.csv daily_log.csv
+#           git commit -m "Update weather data $(date +'%Y-%m-%d')" || echo "No changes to commit"
+#           git push
